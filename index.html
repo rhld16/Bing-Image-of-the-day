@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Bing Image of the day</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      .bg {
+        background-image: url("");
+        height: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+    </style>
+  </head>
+  <body class="bg" id="ye">
+    <img id="img" src="https://raw.githubusercontent.com/rhld16/Bing-Image-of-the-day/master/loading.gif" style="position:absolute;top:50%;left:50%;margin-right:-50%;transform:translate(-50%,-50%)"/>
+    <script>
+      var x = new XMLHttpRequest();
+      x.open("GET", `https://yacdn.org/proxy/https://www.bing.com/HPImageArchive.aspx?format=xml&idx=${Math.floor(Math.random() * 7)}&n=1&mkt=en-UK&callback=?`, true);
+      x.onreadystatechange = function() {
+        if (x.readyState == 4 && x.status == 200) {
+          parser = new DOMParser();
+          xmlDoc = parser.parseFromString(x.responseText, "text/xml");
+          var url = "https://bing.com" + xmlDoc.getElementsByTagName("url")[0].textContent;
+          document.getElementById("ye").style.background = `url(${url})`;
+          document.getElementById("img").style.display = "none";
+        }};
+      x.send(null);
+    </script>
+  </body>
+</html>
