@@ -1,13 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <title>Bing Image of the day</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:700,300" rel="stylesheet" type="text/css">
-    <style>
+	<head>
+		<meta charset="utf-8" />
+		<title>Bing Image of the day</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:700,300" rel="stylesheet" type="text/css">
+			<style>
+    html { 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height:100%;
+        }
          /* Codrops Header Style */
          .codrops-top {
          line-height: 24px;
@@ -44,11 +51,15 @@
          display: block;
          }
     </style>
-</head>
-<body id="body">
-    <img id="img" src="https://raw.githubusercontent.com/rhld16/Bing-Image-of-the-day/master/loading.gif" style="position:absolute;top:50%;left:50%;margin-right:-50%;transform:translate(-50%,-50%)" />
-    <div id="codrops" class="codrops-top">Loading...<span class="right"><a>Download</a></span></div>
-    <script>
+		</head>
+		<body>
+			<img id="img" src="https://raw.githubusercontent.com/rhld16/Bing-Image-of-the-day/master/loading.gif" style="position:absolute;top:50%;left:50%;margin-right:-50%;transform:translate(-50%,-50%)" />
+			<div id="codrops" class="codrops-top">Loading...
+				<span class="right">
+					<a>Download</a>
+				</span>
+			</div>
+			<script>
         var x = new XMLHttpRequest();
         var xran = Math.floor(Math.random() * 7)
          x.open("GET", `https://cors-anywhere.herokuapp.com/https://www.bing.com/HPImageArchive.aspx?format=xml&idx=${xran}&n=1&mkt=en-UK&callback=?`, true);
@@ -57,11 +68,14 @@
              parser = new DOMParser();
              xmlDoc = parser.parseFromString(x.responseText, "text/xml");
              var imgurl = "https://bing.com" + xmlDoc.getElementsByTagName("url")[0].textContent;
-             document.getElementById("body").style.background = `transparent url(${imgurl}) no-repeat fixed center 100%`;
+             document.querySelector("html").style.background = `url(${imgurl}) no-repeat center center fixed`;
              document.getElementById("img").style.display = "none";
-             document.getElementById("codrops").innerHTML = xmlDoc.getElementsByTagName("copyright")[0].textContent + `<span class='right'><a href=${imgurl}>Download</a>`;
+             document.getElementById("codrops").innerHTML = xmlDoc.getElementsByTagName("copyright")[0].textContent + `
+				<span class='right'>
+					<a href=${imgurl}>Download</a>`;
            }};
          x.send(null);
-    </script>
-</body>
+    
+				</script>
+		</body>
 </html>
